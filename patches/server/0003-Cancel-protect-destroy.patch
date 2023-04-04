@@ -1,6 +1,6 @@
 From: Chosen <haizhongdelan@outlook.com>
 Date: Sun, 2 Apr 2023 17:18:59 +0800
-Subject: [PATCH] Cancell protect destroy
+Subject: [PATCH] Cancel protect destroy
 
 diff --git a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
 index d1c7eba29c64a6dbf55d3062ced9769eecb548ed..faaf50cb9bce254aef554ed8b402b145532e12a4 100644
@@ -17,7 +17,7 @@ index d1c7eba29c64a6dbf55d3062ced9769eecb548ed..faaf50cb9bce254aef554ed8b402b145
 -                    }
 -                }
 -                // Paper end - prevent destroying unbreakable blocks
-+                // Cancell protect destroy by Skydom
++                // Cancel protect destroy by Skydom
                 if (k < 0 && !this.level.getBlockState(temp).getMaterial().isSolid()) {
                     return false;
                 }
