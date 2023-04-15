@@ -4,20 +4,6 @@ Date: Sat, 15 Apr 2023 14:00:27 +0800
 Subject: [PATCH] Skydom Server Utils
 
 
-diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index c07eb451a576811a39021f6f97103c77488fd001..df43f9da21081aa4e32f1c9c2301cf0844dd7349 100644
---- a/src/main/java/co/aikar/timings/TimingsExport.java
-+++ b/src/main/java/co/aikar/timings/TimingsExport.java
-@@ -242,7 +242,8 @@ public class TimingsExport extends Thread {
-         parent.put("config", createObject(
-             pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
-             pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
--            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null))
-+            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Skydom - add config to timings report
-+            pair("skydom", mapAsJSON(Bukkit.spigot().getSkydomConfig(), null)) // Skydom - add config to timings report
-         ));
- 
-         new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java b/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
 index 41b9405d6759d865e0d14dd4f95163e9690e967d..af9d0467f80149415dd588cafe0b6b9e75783c44 100644
 --- a/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
@@ -45,7 +31,7 @@ index 46954db7ecd35ac4018fdf476df7c8020d7ce6c8..d1abd746a80b86bd5b56178cdebb8558
      public PlayerAreaMap() {
          super();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..2091992e71c6646d794f72553c85b718db253b04 100644
+index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..9c43be493774a29f9b16caa0c36ca8c8bd58ffd8 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -399,6 +399,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
