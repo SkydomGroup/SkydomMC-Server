@@ -1,12 +1,14 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chosen <haizhongdelan@outlook.com>
-Date: Tur, 4 Apr 2023 21:18:15 +0800
+Date: Tue, 4 Apr 2023 21:18:15 +0800
 Subject: [PATCH] Fix tripwire update
 
+
 diff --git a/src/main/java/net/minecraft/world/level/block/TripWireBlock.java b/src/main/java/net/minecraft/world/level/block/TripWireBlock.java
-index 4e2fb4ee8e46b3c363992ff23e26f5a648c5f003..7f60175bf671d282c11e9084670d2bb900968255 100644
+index 7f60175bf671d282c11e9084670d2bb900968255..ce2ea31b1c3d82c9e67d254ec34fc8abc1b4e8eb 100644
 --- a/src/main/java/net/minecraft/world/level/block/TripWireBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/TripWireBlock.java
-@@ -74,7 +74,7 @@
+@@ -74,7 +74,7 @@ public class TripWireBlock extends Block {
      @Override
      public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean moved) {
          if (!moved && !state.is(newState.getBlock())) {
@@ -14,10 +16,10 @@ index 4e2fb4ee8e46b3c363992ff23e26f5a648c5f003..7f60175bf671d282c11e9084670d2bb9
 +            this.updateSource(world, pos, (BlockState) state.setValue(TripWireBlock.POWERED, true)); // Skydom - don't fix it!
          }
      }
-
-@@ -89,12 +89,7 @@
+ 
+@@ -89,12 +89,7 @@ public class TripWireBlock extends Block {
      }
-
+ 
      private void updateSource(Level world, BlockPos pos, BlockState state) {
 -        // Paper start - fix state inconsistency
 -        this.updateSource(world, pos, state, false);
@@ -29,8 +31,8 @@ index 4e2fb4ee8e46b3c363992ff23e26f5a648c5f003..7f60175bf671d282c11e9084670d2bb9
          Direction[] aenumdirection = new Direction[]{Direction.SOUTH, Direction.WEST};
          int i = aenumdirection.length;
          int j = 0;
-@@ -110,7 +105,7 @@
-
+@@ -110,7 +105,7 @@ public class TripWireBlock extends Block {
+ 
                      if (iblockdata1.is((Block) this.hook)) {
                          if (iblockdata1.getValue(TripWireHookBlock.FACING) == enumdirection.getOpposite()) {
 -                            this.hook.calculateState(world, blockposition1, iblockdata1, false, true, k, state, beingRemoved); // Paper - fix state inconsistency
@@ -38,15 +40,13 @@ index 4e2fb4ee8e46b3c363992ff23e26f5a648c5f003..7f60175bf671d282c11e9084670d2bb9
                          }
                      } else if (iblockdata1.is((Block) this)) {
                          ++k;
-
-
 diff --git a/src/main/java/net/minecraft/world/level/block/TripWireHookBlock.java b/src/main/java/net/minecraft/world/level/block/TripWireHookBlock.java
-index 004dce26ff073f1de52a84cd425c4f60fdab5e50..22d42186973e8f0bf664c5fae261c40af2836173 100644
+index 004dce26ff073f1de52a84cd425c4f60fdab5e50..08fbe2a14cf64cfaf14228c74f9826c9fd952ecf 100644
 --- a/src/main/java/net/minecraft/world/level/block/TripWireHookBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/TripWireHookBlock.java
-@@ -108,12 +108,7 @@
+@@ -108,12 +108,7 @@ public class TripWireHookBlock extends Block {
      }
-
+ 
      public void calculateState(Level world, BlockPos pos, BlockState state, boolean beingRemoved, boolean flag1, int i, @Nullable BlockState iblockdata1) {
 -        // Paper start - fix tripwire inconsistency
 -        this.calculateState(world, pos, state, beingRemoved, flag1, i, iblockdata1, false);
@@ -58,17 +58,17 @@ index 004dce26ff073f1de52a84cd425c4f60fdab5e50..22d42186973e8f0bf664c5fae261c40a
          Direction enumdirection = (Direction) state.getValue(TripWireHookBlock.FACING);
          boolean flag2 = (Boolean) state.getValue(TripWireHookBlock.ATTACHED);
          boolean flag3 = (Boolean) state.getValue(TripWireHookBlock.POWERED);
-@@ -147,7 +142,7 @@
+@@ -147,7 +142,7 @@ public class TripWireHookBlock extends Block {
                  boolean flag7 = (Boolean) iblockdata2.getValue(TripWireBlock.POWERED);
-
+ 
                  flag5 |= flag6 && flag7;
 -                if (k != i || !tripWireBeingRemoved || !flag6) // Paper - don't update the tripwire again if being removed and not disarmed
 +                if (k != i || true || !flag6) // Paper - don't update the tripwire again if being removed and not disarmed // Skydom - always update it
                  aiblockdata[k] = iblockdata2;
                  if (k == i) {
                      world.scheduleTick(pos, (Block) this, 10);
-@@ -182,6 +182,5 @@
-
+@@ -182,7 +177,6 @@ public class TripWireHookBlock extends Block {
+ 
          this.emitState(world, pos, flag4, flag5, flag2, flag3);
          if (!beingRemoved) {
 -            if (world.getBlockState(pos).getBlock() == Blocks.TRIPWIRE_HOOK) // Paper - validate

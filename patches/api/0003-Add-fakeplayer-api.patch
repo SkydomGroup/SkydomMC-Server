@@ -1,0 +1,211 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Chosen <haizhongdelan@outlook.com>
+Date: Sat, 15 Apr 2023 13:22:57 +0800
+Subject: [PATCH] Add fakeplayer api
+
+
+diff --git a/src/main/java/org/skydom/chosen/server/entity/Bot.java b/src/main/java/org/skydom/chosen/server/entity/Bot.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..297e22c3455b6ad2ad83d82eff51f896f5f861c8
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/entity/Bot.java
+@@ -0,0 +1,17 @@
++package org.skydom.chosen.server.entity;
++
++import org.bukkit.entity.Player;
++import org.jetbrains.annotations.Nullable;
++
++/**
++ * Represents a fakeplayer
++ */
++public interface Bot extends Player {
++/**
++ * Gets the fakeplayer skin
++ *
++ * @return fakeplayer skin name
++ */
++    @Nullable
++    public String getSkinName();
++}
+diff --git a/src/main/java/org/skydom/chosen/server/entity/bot/BotCreateEvent.java b/src/main/java/org/skydom/chosen/server/entity/bot/BotCreateEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..d47d026d58bcb0daf209f29851f7c0ca5a56d28a
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotCreateEvent.java
+@@ -0,0 +1,106 @@
++package org.skydom.chosen.server.entity.bot;
++
++import org.bukkit.Location;
++import org.bukkit.event.Cancellable;
++import org.bukkit.event.Event;
++import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
++
++    /**
++  * Call when a fakeplayer creates a server
++  */
++    public class BotCreateEvent extends Event implements Cancellable {
++        private static final HandlerList handlers = new HandlerList();
++
++        private final String bot;
++        private final String skin;
++        private String joinMessage;
++        private Location createLocation;
++        private boolean cancel = false;
++
++        public BotCreateEvent(@NotNull final String who, @NotNull final String skin, @NotNull final Location createLocation, @Nullable final String joinMessage) {
++            this.bot = who;
++            this.skin = skin;
++            this.joinMessage = joinMessage;
++            this.createLocation = createLocation;
++        }
++
++        /**
++        * Gets the fakeplayer name
++         *
++        * @return fakeplayer name
++        */
++        public String getBot() {
++            return bot;
++        }
++
++        /**
++         * Gets the join message to send to all online players
++        *
++         * @return string join message. Can be null
++         */
++        @Nullable
++         public String getJoinMessage() {
++            return joinMessage;
++         }
++
++        /**
++        * Sets the join message to send to all online players
++        *
++        * @param joinMessage join message. If null, no message will be sent
++        */
++        public void setJoinMessage(@Nullable String joinMessage) {
++            this.joinMessage = joinMessage;
++        }
++
++        /**
++        * Gets the location to create the fakeplayer
++        *
++        * @return Location to create the fakeplayer
++        */
++        @NotNull
++        public Location getCreateLocation() {
++            return createLocation;
++        }
++
++        /**
++        * Sets the location to create the fakeplayer
++        *
++        * @param createLocation location to create the fakeplayer
++        */
++        public void setCreateLocation(@NotNull Location createLocation) {
++            this.createLocation = createLocation;
++        }
++
++        /**
++        * Gets the fakeplayer skin
++        *
++        * @return fakeplayer skin name
++        */
++        @Nullable
++        public String getSkin() {
++                return skin;
++            }
++
++        @Override
++        public boolean isCancelled() {
++            return cancel;
++        }
++
++        @Override
++        public void setCancelled(boolean cancel) {
++            this.cancel = cancel;
++        }
++
++        @Override
++        @NotNull
++        public HandlerList getHandlers() {
++            return handlers;
++        }
++
++        @NotNull
++        public static HandlerList getHandlerList() {
++            return handlers;
++        }
++}
+diff --git a/src/main/java/org/skydom/chosen/server/entity/bot/BotEvent.java b/src/main/java/org/skydom/chosen/server/entity/bot/BotEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..95d00a0eabc8497ed74a929e396dc2a7ea1e72eb
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotEvent.java
+@@ -0,0 +1,31 @@
++package org.skydom.chosen.server.entity.bot;
++
++import org.bukkit.event.Event;
++import org.jetbrains.annotations.NotNull;
++import org.skydom.chosen.server.entity.Bot;
++
++/**
++ * Represents a fakeplayer related event
++ */
++public abstract class BotEvent extends Event {
++    protected Bot bot;
++
++    public BotEvent(@NotNull final Bot who) {
++        bot = who;
++    }
++
++    public BotEvent(@NotNull final Bot who, boolean async) { // Paper - public
++        super(async);
++        bot = who;
++    }
++
++    /**
++     * Returns the fakeplayer involved in this event
++     *
++     * @return Fakeplayer who is involved in this event
++     */
++    @NotNull
++    public final Bot getBot() {
++        return bot;
++    }
++}
+diff --git a/src/main/java/org/skydom/chosen/server/entity/bot/BotJoinEvent.java b/src/main/java/org/skydom/chosen/server/entity/bot/BotJoinEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..4efd0f59194f43b0801f6ed4146587b6162784e2
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotJoinEvent.java
+@@ -0,0 +1,27 @@
++package org.skydom.chosen.server.entity.bot;
++
++import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
++import org.skydom.chosen.server.entity.Bot;
++
++/**
++ * Called when a fakeplayer joins a server
++ */
++public class BotJoinEvent extends BotEvent {
++    private static final HandlerList handlers = new HandlerList();
++
++    public BotJoinEvent(@NotNull Bot who) {
++        super(who);
++    }
++
++    @Override
++    @NotNull
++    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    @NotNull
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++}

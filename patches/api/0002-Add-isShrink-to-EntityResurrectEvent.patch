@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Chosen <haizhongdelan@outlook.com>
+Date: Sat, 15 Apr 2023 13:02:21 +0800
+Subject: [PATCH] Add isShrink to EntityResurrectEvent
+
+
+diff --git a/src/main/java/org/bukkit/event/entity/EntityResurrectEvent.java b/src/main/java/org/bukkit/event/entity/EntityResurrectEvent.java
+index 2f6ad5c2fc7ae7cf22cb424df3543c24f3ee6ebe..a745595d8bd5f8709c4713ff674dcc15556187dd 100644
+--- a/src/main/java/org/bukkit/event/entity/EntityResurrectEvent.java
++++ b/src/main/java/org/bukkit/event/entity/EntityResurrectEvent.java
+@@ -15,19 +15,34 @@ import org.jetbrains.annotations.Nullable;
+ public class EntityResurrectEvent extends EntityEvent implements Cancellable {
+ 
+     private static final HandlerList handlers = new HandlerList();
+-    //
++
+     private boolean cancelled;
++    private boolean shrink;
+ 
+     private final EquipmentSlot hand;
+ 
+-    public EntityResurrectEvent(@NotNull LivingEntity what, @Nullable EquipmentSlot hand) {
++    public EntityResurrectEvent(@NotNull LivingEntity what, @Nullable EquipmentSlot hand, boolean shrink) {
+         super(what);
++        this.shrink = shrink;
+         this.hand = hand;
+     }
+ 
++    public EntityResurrectEvent(@NotNull LivingEntity what, @Nullable EquipmentSlot hand) {
++        this(what, hand, true);
++    }
++
++
+     @Deprecated
+     public EntityResurrectEvent(@NotNull LivingEntity what) {
+-        this(what, null);
++        this(what, null, true);
++    }
++
++    public boolean isShrink() {
++        return shrink;
++    }
++
++    public void setShrink(boolean shrink) {
++        this.shrink = shrink;
+     }
+ 
+     @NotNull

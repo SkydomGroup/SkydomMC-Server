@@ -1,13 +1,14 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chosen <haizhongdelan@outlook.com>
 Date: Sat, 30 Oct 2021 21:07:43 +0800
 Subject: [PATCH] Fix gravity block duper
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index fc79183a6bd979d98d79e88422801f9bb2646ea6..98a03fd18916ec2cf0104790d8683ebbfe87ba8e 100644
+index 4705d7066207250c03a5f98eef61554c901f2e35..467fadd4c27023c8bf3826b113ccb2c6fad5b943 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -513,36 +513,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -512,36 +512,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return chunkMap.playerEntityTrackerTrackMaps[type.ordinal()].getObjectsInRange(MCUtil.getCoordinateKey(this));
      }
      // Paper end - optimise entity tracking
@@ -45,7 +46,7 @@ index fc79183a6bd979d98d79e88422801f9bb2646ea6..98a03fd18916ec2cf0104790d8683ebb
  
      public Entity(EntityType<?> type, Level world) {
          this.id = Entity.ENTITY_COUNTER.incrementAndGet();
-@@ -2951,7 +2923,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2944,7 +2916,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
              }
  
              this.processPortalCooldown();
@@ -55,7 +56,7 @@ index fc79183a6bd979d98d79e88422801f9bb2646ea6..98a03fd18916ec2cf0104790d8683ebb
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/item/FallingBlockEntity.java b/src/main/java/net/minecraft/world/entity/item/FallingBlockEntity.java
-index ce2c3c146ef64400e00084bd2245d2b87a67fbc2..12aae043042c5352fbe564fc777172a6adb19680 100644
+index 536856300da929c101f50da5827677bada5feb50..126f4cb8af61f30bf22030ac99c2ace36eb0f64b 100644
 --- a/src/main/java/net/minecraft/world/entity/item/FallingBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/FallingBlockEntity.java
 @@ -64,7 +64,7 @@ public class FallingBlockEntity extends Entity {
@@ -94,7 +95,7 @@ index ce2c3c146ef64400e00084bd2245d2b87a67fbc2..12aae043042c5352fbe564fc777172a6
              // Paper start - Configurable EntityFallingBlock height nerf
              if (this.level.paperConfig().fixes.fallingBlockHeightNerf.test(v -> this.getY() > v)) {
 diff --git a/src/main/java/net/minecraft/world/level/block/EndPortalBlock.java b/src/main/java/net/minecraft/world/level/block/EndPortalBlock.java
-index 41d7cff39fc37955877668337689b4b26cd8c7cf..5e0e8afa553a8dcd87dfc10a595ba10c2b3da7df 100644
+index 41d7cff39fc37955877668337689b4b26cd8c7cf..9e2f718ac524b9114a2567df27d0fec16cdab0cf 100644
 --- a/src/main/java/net/minecraft/world/level/block/EndPortalBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/EndPortalBlock.java
 @@ -53,12 +53,19 @@ public class EndPortalBlock extends BaseEntityBlock {

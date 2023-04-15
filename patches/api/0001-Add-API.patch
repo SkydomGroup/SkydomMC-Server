@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Chosen <haizhongdelan@outlook.com>
+Date: Sat, 15 Apr 2023 12:53:09 +0800
+Subject: [PATCH] Add API
+
+
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index 8621dba7f10ab822b5b99ce0d05da58823605cb6..5eaccb6883d4ca9d5f230617ca5204b0e99c69a6 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -1968,6 +1968,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+         }
+         // Paper end
+ 
++        // Skydom start
++        @NotNull
++        public org.bukkit.configuration.file.YamlConfiguration getSkydomConfig()
++        {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++        // Skydom end
+         /**
+          * Sends the component to the player
+          *

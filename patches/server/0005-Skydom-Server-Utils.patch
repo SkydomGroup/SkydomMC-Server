@@ -1,0 +1,328 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Chosen <haizhongdelan@outlook.com>
+Date: Sat, 15 Apr 2023 14:00:27 +0800
+Subject: [PATCH] Skydom Server Utils
+
+
+diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
+index c07eb451a576811a39021f6f97103c77488fd001..df43f9da21081aa4e32f1c9c2301cf0844dd7349 100644
+--- a/src/main/java/co/aikar/timings/TimingsExport.java
++++ b/src/main/java/co/aikar/timings/TimingsExport.java
+@@ -242,7 +242,8 @@ public class TimingsExport extends Thread {
+         parent.put("config", createObject(
+             pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
+             pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
+-            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null))
++            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Skydom - add config to timings report
++            pair("skydom", mapAsJSON(Bukkit.spigot().getSkydomConfig(), null)) // Skydom - add config to timings report
+         ));
+ 
+         new TimingsExport(listeners, parent, history).start();
+diff --git a/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java b/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
+index 41b9405d6759d865e0d14dd4f95163e9690e967d..af9d0467f80149415dd588cafe0b6b9e75783c44 100644
+--- a/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
++++ b/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
+@@ -26,7 +26,7 @@ public abstract class AreaMap<E> {
+ 
+     // we use linked for better iteration.
+     // map of: coordinate to set of objects in coordinate
+-    protected final Long2ObjectOpenHashMap<PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<E>> areaMap = new Long2ObjectOpenHashMap<>(1024, 0.7f);
++    protected Long2ObjectOpenHashMap<PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<E>> areaMap = new Long2ObjectOpenHashMap<>(1024, 0.7f); // Skydom - not final
+     protected final PooledLinkedHashSets<E> pooledHashSets;
+ 
+     protected final ChangeCallback<E> addCallback;
+diff --git a/src/main/java/com/destroystokyo/paper/util/misc/PlayerAreaMap.java b/src/main/java/com/destroystokyo/paper/util/misc/PlayerAreaMap.java
+index 46954db7ecd35ac4018fdf476df7c8020d7ce6c8..d1abd746a80b86bd5b56178cdebb855810b73b95 100644
+--- a/src/main/java/com/destroystokyo/paper/util/misc/PlayerAreaMap.java
++++ b/src/main/java/com/destroystokyo/paper/util/misc/PlayerAreaMap.java
+@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
+ /**
+  * @author Spottedleaf
+  */
+-public final class PlayerAreaMap extends AreaMap<ServerPlayer> {
++public class PlayerAreaMap extends AreaMap<ServerPlayer> { // Skydom - not final
+ 
+     public PlayerAreaMap() {
+         super();
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..2091992e71c6646d794f72553c85b718db253b04 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -399,6 +399,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+     private UUID originWorld;
+     public boolean freezeLocked = false; // Paper - Freeze Tick Lock API
+     public boolean collidingWithWorldBorder; // Paper
++    private CompoundTag SkydomData = new CompoundTag(); // Skydom - Skydom ex data
+ 
+     public void setOrigin(@javax.annotation.Nonnull Location location) {
+         this.origin = location.toVector();
+@@ -2276,6 +2277,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+                 nbt.putBoolean("Paper.FreezeLock", true);
+             }
+             // Paper end
++            nbt.put("Skydom.Data", SkydomData); // Skydom - Skydom ex data
+             return nbt;
+         } catch (Throwable throwable) {
+             CrashReport crashreport = CrashReport.forThrowable(throwable, "Saving entity NBT");
+@@ -2444,6 +2446,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+                 freezeLocked = nbt.getBoolean("Paper.FreezeLock");
+             }
+             // Paper end
++            // Skydom start - Skydom ex data
++            if (nbt.contains("Skydom.Data")) {
++                SkydomData = nbt.getCompound("Skydom.Data");
++            }
++            // Skydom start - Skydom ex data
+ 
+         } catch (Throwable throwable) {
+             CrashReport crashreport = CrashReport.forThrowable(throwable, "Loading entity NBT");
+@@ -4609,4 +4616,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+         return ((net.minecraft.server.level.ServerChunkCache) level.getChunkSource()).isPositionTicking(this);
+     }
+     // Paper end
++
++    // Skydom start - Skydom ex data
++    public CompoundTag getSkydomData() {
++        return SkydomData;
++    }
++    // Skydom end - Skydom ex data
+ }
+diff --git a/src/main/java/org/skydom/chosen/server/SkydomLogger.java b/src/main/java/org/skydom/chosen/server/SkydomLogger.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..0f8ae1295a9dc6985d1ee3bd3a0566351469e56f
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/SkydomLogger.java
+@@ -0,0 +1,15 @@
++package org.skydom.chosen.server;
++
++import org.bukkit.Bukkit;
++import java.util.logging.Level;
++import java.util.logging.Logger;
++
++public class SkydomLogger extends Logger {
++    public static final SkydomLogger LOGGER = new SkydomLogger();
++
++    private SkydomLogger() {
++        super("Skydom", null);
++        setParent(Bukkit.getLogger());
++        setLevel(Level.ALL);
++    }
++}
+diff --git a/src/main/java/org/skydom/chosen/server/util/AsyncExecutor.java b/src/main/java/org/skydom/chosen/server/util/AsyncExecutor.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..0ff7b5ee42a1bc01ef2aa0a12795c57cb1ef02e3
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/util/AsyncExecutor.java
+@@ -0,0 +1,75 @@
++package org.skydom.chosen.server.util;
++
++import com.google.common.collect.Queues;
++import org.skydom.chosen.server.SkydomLogger;
++import java.util.Queue;
++import java.util.concurrent.locks.Condition;
++import java.util.concurrent.locks.Lock;
++import java.util.concurrent.locks.ReentrantLock;
++import java.util.logging.Level;
++
++// Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
++public class AsyncExecutor implements Runnable {
++
++    private final Queue<Runnable> jobs = Queues.newArrayDeque();
++    private final Lock mutex = new ReentrantLock();
++    private final Condition cond = mutex.newCondition();
++    private final Thread thread;
++    private volatile boolean killswitch = false;
++
++    public AsyncExecutor(String threadName) {
++        this.thread = new Thread(this, threadName);
++    }
++
++    public void start() {
++        thread.start();
++    }
++
++    public void kill() {
++        killswitch = true;
++        cond.signalAll();
++    }
++
++    public void submit(Runnable runnable) {
++        mutex.lock();
++        try {
++            jobs.offer(runnable);
++            cond.signalAll();
++        } finally {
++            mutex.unlock();
++        }
++    }
++
++    @Override
++    public void run() {
++        while (!killswitch) {
++            try {
++                Runnable runnable = takeRunnable();
++                if (runnable != null) {
++                    runnable.run();
++                }
++            } catch (InterruptedException e) {
++                Thread.currentThread().interrupt();
++            } catch (Exception e) {
++                SkydomLogger.LOGGER.log(Level.SEVERE, e, () -> "Failed to execute async job for thread " + thread.getName());
++            }
++        }
++    }
++
++    private Runnable takeRunnable() throws InterruptedException {
++        mutex.lock();
++        try {
++            while (jobs.isEmpty() && !killswitch) {
++                cond.await();
++            }
++
++            if (jobs.isEmpty()) {
++                return null;
++            }
++
++            return jobs.remove();
++        } finally {
++            mutex.unlock();
++        }
++    }
++}
+diff --git a/src/main/java/org/skydom/chosen/server/util/AsyncPlayerAreaMap.java b/src/main/java/org/skydom/chosen/server/util/AsyncPlayerAreaMap.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..a47cb2891b45c011350c51530b9b09ffd50064c5
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/util/AsyncPlayerAreaMap.java
+@@ -0,0 +1,32 @@
++package org.skydom.chosen.server.util;
++
++import com.destroystokyo.paper.util.misc.PlayerAreaMap;
++import com.destroystokyo.paper.util.misc.PooledLinkedHashSets;
++import net.minecraft.server.level.ServerPlayer;
++
++import java.util.concurrent.ConcurrentHashMap;
++
++// Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
++public class AsyncPlayerAreaMap extends PlayerAreaMap {
++
++    public AsyncPlayerAreaMap() {
++        super();
++        this.areaMap = new Long2ObjectOpenHashMapWrapper<>(new ConcurrentHashMap<>(1024, 0.7f));
++    }
++
++    public AsyncPlayerAreaMap(final PooledLinkedHashSets<ServerPlayer> pooledHashSets) {
++        super(pooledHashSets);
++        this.areaMap = new Long2ObjectOpenHashMapWrapper<>(new ConcurrentHashMap<>(1024, 0.7f));
++    }
++
++    public AsyncPlayerAreaMap(final PooledLinkedHashSets<ServerPlayer> pooledHashSets, final ChangeCallback<ServerPlayer> addCallback,
++                              final ChangeCallback<ServerPlayer> removeCallback) {
++        this(pooledHashSets, addCallback, removeCallback, null);
++    }
++
++    public AsyncPlayerAreaMap(final PooledLinkedHashSets<ServerPlayer> pooledHashSets, final ChangeCallback<ServerPlayer> addCallback,
++                              final ChangeCallback<ServerPlayer> removeCallback, final ChangeSourceCallback<ServerPlayer> changeSourceCallback) {
++        super(pooledHashSets, addCallback, removeCallback, changeSourceCallback);
++        this.areaMap = new Long2ObjectOpenHashMapWrapper<>(new ConcurrentHashMap<>(1024, 0.7f));
++    }
++}
+diff --git a/src/main/java/org/skydom/chosen/server/util/IterableWrapper.java b/src/main/java/org/skydom/chosen/server/util/IterableWrapper.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..d0ba21f40f77fec6835220d22c0539555442d6f3
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/util/IterableWrapper.java
+@@ -0,0 +1,21 @@
++package org.skydom.chosen.server.util;
++
++import org.jetbrains.annotations.NotNull;
++
++import java.util.Iterator;
++
++// Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
++public class IterableWrapper<T> implements Iterable<T> {
++
++    private final Iterator<T> iterator;
++
++    public IterableWrapper(Iterator<T> iterator) {
++        this.iterator = iterator;
++    }
++
++    @NotNull
++    @Override
++    public Iterator<T> iterator() {
++        return iterator;
++    }
++}
+diff --git a/src/main/java/org/skydom/chosen/server/util/Long2ObjectOpenHashMapWrapper.java b/src/main/java/org/skydom/chosen/server/util/Long2ObjectOpenHashMapWrapper.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..44ac42bffb5b1497061fc68c67a68080e4baa4f6
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/util/Long2ObjectOpenHashMapWrapper.java
+@@ -0,0 +1,41 @@
++package org.skydom.chosen.server.util;
++
++import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
++import org.jetbrains.annotations.Nullable;
++
++import java.util.Map;
++
++public class Long2ObjectOpenHashMapWrapper<V> extends Long2ObjectOpenHashMap<V> {
++
++    private final Map<Long, V> backingMap;
++
++    public Long2ObjectOpenHashMapWrapper(Map<Long, V> map) {
++        backingMap = map;
++    }
++
++    @Override
++    public V put(Long key, V value) {
++        return backingMap.put(key, value);
++    }
++
++    @Override
++    public V get(Object key) {
++        return backingMap.get(key);
++    }
++
++    @Override
++    public V remove(Object key) {
++        return backingMap.remove(key);
++    }
++
++    @Nullable
++    @Override
++    public V putIfAbsent(Long key, V value) {
++        return backingMap.putIfAbsent(key, value);
++    }
++
++    @Override
++    public int size() {
++        return backingMap.size();
++    }
++}
+diff --git a/src/main/java/org/skydom/chosen/server/util/ProtocolUtils.java b/src/main/java/org/skydom/chosen/server/util/ProtocolUtils.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..61cde9017e8b86b546e51e33e4422143e530894b
+--- /dev/null
++++ b/src/main/java/org/skydom/chosen/server/util/ProtocolUtils.java
+@@ -0,0 +1,19 @@
++package org.skydom.chosen.server.util;
++
++import net.minecraft.network.FriendlyByteBuf;
++import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;
++import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
++import net.minecraft.resources.ResourceLocation;
++import net.minecraft.server.level.ServerPlayer;
++import org.jetbrains.annotations.NotNull;
++
++public class ProtocolUtils {
++
++    public static void sendPayloadPacket(@NotNull ServerPlayer player, ResourceLocation channel, FriendlyByteBuf data) {
++        player.connection.send(new ClientboundCustomPayloadPacket(channel, data));
++    }
++
++    public static boolean isNamespacePacket(@NotNull ServerboundCustomPayloadPacket packet, String namespace) {
++        return packet.identifier.getNamespace().equals(namespace);
++    }
++}
