@@ -46,7 +46,7 @@ index a7e133f3495e9132a5fdae2c24f225e7b026295a..20d84766e5c6280d810041e961c106b1
          io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
          // Paper end
  
-+        org.skydom.chosen.server.SkydomConfig.init((java.io.File) options.valueOf("skydom-settings")); // Skydom - Server Config
++        org.skydom.chosen.server.SkydomConfig.init((java.io.File) options.valueOf("skydommc-server-settings")); // Skydom - Server Config
 +        org.skydom.chosen.server.SkydomConfig.registerCommands(); // Skydom - Server Command
          this.setPvpAllowed(dedicatedserverproperties.pvp);
          this.setFlightAllowed(dedicatedserverproperties.allowFlight);
@@ -194,7 +194,7 @@ index 0000000000000000000000000000000000000000..70232eb2b78460b0aca3d97e7c9484e0
 +                config = new YamlConfiguration();
 +                config.options().header(CONFIG_HEADER);
 +                config.options().copyDefaults(true);
-+        
++
 +                    if (!file.exists()) {
 +                        try {
 +                                file.createNewFile();
@@ -210,7 +210,7 @@ index 0000000000000000000000000000000000000000..70232eb2b78460b0aca3d97e7c9484e0
 +                                throw new RuntimeException(ex); // unreachable
 +                            }
 +                    }
-+        
++       
 +                    if (config.contains("config-version-please-do-not-modify-me")) {
 +                        SkydomConfig.set("config-version-please-do-not-modify-me", null);
 +                    }
