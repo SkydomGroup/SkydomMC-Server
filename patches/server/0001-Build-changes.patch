@@ -28,7 +28,7 @@ index 9cf389defdaeb887e9cad4f0fed3f3b95667b238..12dd240474733161aab9da1036d4b7c0
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
 -            "Implementation-Version" to "git-Paper-$implementationVersion",
-+            "Implementation-Version" to "git-skydom-$implementationVersion", // Skydom
++            "Implementation-Version" to "git-Skydom-$implementationVersion", // Skydom
              "Implementation-Vendor" to date, // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,

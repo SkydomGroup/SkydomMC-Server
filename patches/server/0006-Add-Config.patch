@@ -18,19 +18,6 @@ index c07eb451a576811a39021f6f97103c77488fd001..395a958006c5646e10ed9a5fa11c4727
          ));
  
          new TimingsExport(listeners, parent, history).start();
-diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index a7e133f3495e9132a5fdae2c24f225e7b026295a..d99112b9a974de2507d426d97e352f5da013cb2a 100644
---- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-+++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -222,6 +222,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
-         io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
-         // Paper end
- 
-+        org.skydom.chosen.server.SkydomConfig.init((java.io.File) options.valueOf("skydom-settings")); // Skydom - Server Config
-+        org.skydom.chosen.server.SkydomConfig.registerCommands(); // Skydom - Server Command
-         this.setPvpAllowed(dedicatedserverproperties.pvp);
-         this.setFlightAllowed(dedicatedserverproperties.allowFlight);
-         this.setMotd(dedicatedserverproperties.motd);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
 index f502934c3ab34351f61d057ef7927310b63c680b..fc1e205070aa1908a95a22d2628428d5d9986f36 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
@@ -51,6 +38,19 @@ index f502934c3ab34351f61d057ef7927310b63c680b..fc1e205070aa1908a95a22d2628428d5
              org.spigotmc.WatchdogThread.tick(); // Paper
              org.spigotmc.WatchdogThread.hasStarted = true; // Paper
              Arrays.fill( recentTps, 20 );
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+index a7e133f3495e9132a5fdae2c24f225e7b026295a..20d84766e5c6280d810041e961c106b1fabcf38a 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -222,6 +222,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+         io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
+         // Paper end
+ 
++        org.skydom.chosen.server.SkydomConfig.init((java.io.File) options.valueOf("skydom-settings")); // Skydom - Server Config
++        org.skydom.chosen.server.SkydomConfig.registerCommands(); // Skydom - Server Command
+         this.setPvpAllowed(dedicatedserverproperties.pvp);
+         this.setFlightAllowed(dedicatedserverproperties.allowFlight);
+         this.setMotd(dedicatedserverproperties.motd);
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
 index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..717ffaeb0aa44529b16b3213cf642c051c7a1bb0 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
@@ -80,10 +80,10 @@ index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..717ffaeb0aa44529b16b3213cf642c05
          this.world = new CraftWorld((ServerLevel) this, gen, biomeProvider, env);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e9d588a50d9623cc2c058947f76e09f7bd9f489b..7a7c6d6a964ce82b93f5c224cd15b805f0cbb80d 100644
+index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf0134228f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -956,6 +956,7 @@ public final class CraftServer implements Server {
+@@ -956,6 +957,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          this.console.paperConfigurations.reloadConfigs(this.console);
@@ -91,7 +91,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..7a7c6d6a964ce82b93f5c224cd15b805
          for (ServerLevel world : this.console.getAllLevels()) {
              // world.serverLevelData.setDifficulty(config.difficulty); // Paper - per level difficulty
              world.setSpawnSettings(world.serverLevelData.getDifficulty() != Difficulty.PEACEFUL && config.spawnMonsters, config.spawnAnimals); // Paper - per level difficulty (from MinecraftServer#setDifficulty(ServerLevel, Difficulty, boolean))
-@@ -963,7 +964,7 @@ public final class CraftServer implements Server {
+@@ -963,7 +965,7 @@ public final class CraftServer implements Server {
              for (SpawnCategory spawnCategory : SpawnCategory.values()) {
                  if (CraftSpawnCategory.isValidForLimits(spawnCategory)) {
                      long ticksPerCategorySpawn = this.getTicksPerSpawns(spawnCategory);
@@ -100,7 +100,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..7a7c6d6a964ce82b93f5c224cd15b805
                          world.ticksPerSpawnCategory.put(spawnCategory, CraftSpawnCategory.getDefaultTicksPerSpawn(spawnCategory));
                      } else {
                          world.ticksPerSpawnCategory.put(spawnCategory, ticksPerCategorySpawn);
-@@ -971,6 +972,7 @@ public final class CraftServer implements Server {
+@@ -971,6 +973,7 @@ public final class CraftServer implements Server {
                  }
              }
              world.spigotConfig.init(); // Spigot
@@ -108,7 +108,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..7a7c6d6a964ce82b93f5c224cd15b805
          }
  
          Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
-@@ -986,6 +988,7 @@ public final class CraftServer implements Server {
+@@ -986,6 +989,7 @@ public final class CraftServer implements Server {
          this.reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          io.papermc.paper.command.PaperCommands.registerCommands(this.console); // Paper
@@ -116,7 +116,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..7a7c6d6a964ce82b93f5c224cd15b805
          this.overrideAllCommandBlockCommands = this.commandsConfiguration.getStringList("command-block-overrides").contains("*");
          this.ignoreVanillaPermissions = this.commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
-@@ -2744,6 +2747,14 @@ public final class CraftServer implements Server {
+@@ -2744,6 +2748,14 @@ public final class CraftServer implements Server {
              return CraftServer.this.console.paperConfigurations.createLegacyObject(CraftServer.this.console);
          }
  
@@ -140,10 +140,10 @@ index 755c223ab2a046285eb9916b6195093714f4c5ba..ad3ca8c2ca15d6f0f78000aeb2ab1684
                          .describedAs("Yml file");
  
 +                // Skydom start - Server Config
-+                acceptsAll(asList("skydommc-server", "skydommc-server-settings"), "File for skydommc-server settings")
++                acceptsAll(Main.asList("skydommc-server", "skydommc-server-settings"), "File for skydommc-server settings")
 +                    .withRequiredArg()
 +                    .ofType(File.class)
-+                     .defaultsTo(new File("skydommc-server.yml"))
++                    .defaultsTo(new File("skydommc-server.yml"))
 +                    .describedAs("Yml file");
 +                // Skydom end - Server Config
 +
@@ -234,7 +234,7 @@ index 0000000000000000000000000000000000000000..70232eb2b78460b0aca3d97e7c9484e0
 +                                            } catch (InvocationTargetException ex) {
 +                                                throw Throwables.propagate(ex.getCause());
 +                                            } catch (Exception ex) {
-+                                                Bukkit.getLogger().log(Level.SEVERE, "Error invoking " +  method, ex);
++                                                Bukkit.getLogger().log(Level.SEVERE, "Error invoking " + method, ex);
 +                                            }
 +                                    }
 +                            }
