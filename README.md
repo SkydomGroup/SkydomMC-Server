@@ -52,5 +52,5 @@
 
 #### 第二种办法。
 * 克隆这个存储库。
-* 运行 `./gradlew applyPatches`后，再运行`./gradlew createReobfBundlerJar` 在你的终端内。
+* 运行 `./gradlew applyPatches`后，再运行`./gradlew createReobfBundlerJar` 在你的终端。
 * 运行完成后，您可以在 *build/libs* 找到构建好的Jar。
