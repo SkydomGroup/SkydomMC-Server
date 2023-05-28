@@ -25,7 +25,7 @@ index f502934c3ab34351f61d057ef7927310b63c680b..fc1e205070aa1908a95a22d2628428d5
  import net.minecraft.world.level.storage.loot.PredicateManager;
  import net.minecraft.world.phys.Vec2;
  import net.minecraft.world.phys.Vec3;
-+import org.skydom.chosen.server.SkydomConfig;
++import org.skydom.server.chosen.SkydomConfig;
  import org.slf4j.Logger;
  
  // CraftBukkit start
@@ -33,7 +33,7 @@ index f502934c3ab34351f61d057ef7927310b63c680b..fc1e205070aa1908a95a22d2628428d5
              LOGGER.info("Done ({})! For help, type \"help\"", doneTime);
              // Paper end
  
-+            org.skydom.chosen.server.SkydomConfig.createWorldSections = false; // Skydom - dont let plugin create worlds fill our config
++            org.skydom.server.chosen.SkydomConfig.createWorldSections = false; // Skydom - dont let plugin create worlds fill our config
              org.spigotmc.WatchdogThread.tick(); // Paper
              org.spigotmc.WatchdogThread.hasStarted = true; // Paper
              Arrays.fill( recentTps, 20 );
@@ -45,8 +45,8 @@ index a7e133f3495e9132a5fdae2c24f225e7b026295a..20d84766e5c6280d810041e961c106b1
          io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
          // Paper end
  
-+        org.skydom.chosen.server.SkydomConfig.init((java.io.File) options.valueOf("skydommc-server-settings")); // Skydom - Server Config
-+        org.skydom.chosen.server.SkydomConfig.registerCommands(); // Skydom - Server Command
++        org.skydom.server.chosen.SkydomConfig.init((java.io.File) options.valueOf("skydommc-server-settings")); // Skydom - Server Config
++        org.skydom.server.chosen.SkydomConfig.registerCommands(); // Skydom - Server Command
          this.setPvpAllowed(dedicatedserverproperties.pvp);
          this.setFlightAllowed(dedicatedserverproperties.allowFlight);
          this.setMotd(dedicatedserverproperties.motd);
@@ -58,7 +58,7 @@ index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..717ffaeb0aa44529b16b3213cf642c05
  import org.bukkit.entity.SpawnCategory;
  import org.bukkit.event.block.BlockPhysicsEvent;
  import org.bukkit.event.world.GenericGameEvent;
-+import org.skydom.chosen.server.SkydomConfig;
++import org.skydom.server.chosen.SkydomConfig;
  // CraftBukkit end
  
  public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -74,7 +74,7 @@ index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..717ffaeb0aa44529b16b3213cf642c05
      protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, RegistryAccess iregistrycustom, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.function.Function<org.spigotmc.SpigotWorldConfig, io.papermc.paper.configuration.WorldConfiguration> paperWorldConfigCreator, java.util.concurrent.Executor executor) { // Paper - Async-Anti-Xray - Pass executor
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName()); // Spigot
          this.paperConfig = paperWorldConfigCreator.apply(this.spigotConfig); // Paper
-+        this.skydomConfig = new org.skydom.chosen.server.SkydomConfig.WorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData)worlddatamutable).getLevelName()); // Skydom - World Config
++        this.skydomConfig = new org.skydom.server.chosen.SkydomConfig.WorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData)worlddatamutable).getLevelName()); // Skydom - World Config
          this.generator = gen;
          this.world = new CraftWorld((ServerLevel) this, gen, biomeProvider, env);
  
@@ -86,7 +86,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          this.console.paperConfigurations.reloadConfigs(this.console);
-+        org.skydom.chosen.server.SkydomConfig.init((File) console.options.valueOf("skydommc-server-settings")); // Skydom - Server Config
++        org.skydom.server.chosen.SkydomConfig.init((File) console.options.valueOf("skydommc-server-settings")); // Skydom - Server Config
          for (ServerLevel world : this.console.getAllLevels()) {
              // world.serverLevelData.setDifficulty(config.difficulty); // Paper - per level difficulty
              world.setSpawnSettings(world.serverLevelData.getDifficulty() != Difficulty.PEACEFUL && config.spawnMonsters, config.spawnAnimals); // Paper - per level difficulty (from MinecraftServer#setDifficulty(ServerLevel, Difficulty, boolean))
@@ -111,7 +111,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf
          this.reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          io.papermc.paper.command.PaperCommands.registerCommands(this.console); // Paper
-+        org.skydom.chosen.server.SkydomConfig.registerCommands(); // Skydom - Server Command
++        org.skydom.server.chosen.SkydomConfig.registerCommands(); // Skydom - Server Command
          this.overrideAllCommandBlockCommands = this.commandsConfiguration.getStringList("command-block-overrides").contains("*");
          this.ignoreVanillaPermissions = this.commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
@@ -123,7 +123,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf
 +        @Override
 +        public YamlConfiguration getSkydomConfig()
 +        {
-+            return org.skydom.chosen.server.SkydomConfig.config;
++            return org.skydom.server.chosen.SkydomConfig.config;
 +        }
 +        /// Skydom end - add config to timings report
 +
@@ -155,7 +155,7 @@ index 0000000000000000000000000000000000000000..70232eb2b78460b0aca3d97e7c9484e0
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/SkydomConfig.java
 @@ -0,0 +1,308 @@
-+package org.skydom.chosen.server;
++package org.skydom.server.chosen;
 +    
 +import com.destroystokyo.paper.util.SneakyThrow;
 +import com.google.common.base.Throwables;
@@ -469,7 +469,7 @@ index 0000000000000000000000000000000000000000..663bb5359464536d8e4ad5e3708907e0
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/command/CommandArgument.java
 @@ -0,0 +1,43 @@
-+package org.skydom.chosen.server.command;
++package org.skydom.server.chosen.command;
 +
 +import org.jetbrains.annotations.NotNull;
 +
@@ -518,7 +518,7 @@ index 0000000000000000000000000000000000000000..8190d67736eaea7876afb216244e2deb
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/command/CommandArgumentResult.java
 @@ -0,0 +1,61 @@
-+package org.skydom.chosen.server.command;
++package org.skydom.server.chosen.command;
 +
 +import net.minecraft.core.BlockPos;
 +import org.bukkit.util.Vector;
@@ -585,7 +585,7 @@ index 0000000000000000000000000000000000000000..da2d4089b7c117d1fdae1a21456926cf
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/command/CommandArgumentType.java
 @@ -0,0 +1,37 @@
-+package org.skydom.chosen.server.command;
++package org.skydom.server.chosen.command;
 +
 +import org.jetbrains.annotations.NotNull;
 +

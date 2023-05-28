@@ -9,7 +9,7 @@ index 0000000000000000000000000000000000000000..297e22c3455b6ad2ad83d82eff51f896
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/entity/Bot.java
 @@ -0,0 +1,17 @@
-+package org.skydom.chosen.server.entity;
++package org.skydom.server.chosen.entity;
 +
 +import org.bukkit.entity.Player;
 +import org.jetbrains.annotations.Nullable;
@@ -32,7 +32,7 @@ index 0000000000000000000000000000000000000000..d47d026d58bcb0daf209f29851f7c0ca
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotCreateEvent.java
 @@ -0,0 +1,106 @@
-+package org.skydom.chosen.server.entity.bot;
++package org.skydom.server.chosen.entity.bot;
 +
 +import org.bukkit.Location;
 +import org.bukkit.event.Cancellable;
@@ -144,11 +144,11 @@ index 0000000000000000000000000000000000000000..95d00a0eabc8497ed74a929e396dc2a7
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotEvent.java
 @@ -0,0 +1,31 @@
-+package org.skydom.chosen.server.entity.bot;
++package org.skydom.server.chosen.entity.bot;
 +
 +import org.bukkit.event.Event;
 +import org.jetbrains.annotations.NotNull;
-+import org.skydom.chosen.server.entity.Bot;
++import org.skydom.server.chosen.entity.Bot;
 +
 +/**
 + * Represents a fakeplayer related event
@@ -181,11 +181,11 @@ index 0000000000000000000000000000000000000000..4efd0f59194f43b0801f6ed4146587b6
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotJoinEvent.java
 @@ -0,0 +1,27 @@
-+package org.skydom.chosen.server.entity.bot;
++package org.skydom.server.chosen.entity.bot;
 +
 +import org.bukkit.event.HandlerList;
 +import org.jetbrains.annotations.NotNull;
-+import org.skydom.chosen.server.entity.Bot;
++import org.skydom.server.chosen.entity.Bot;
 +
 +/**
 + * Called when a fakeplayer joins a server

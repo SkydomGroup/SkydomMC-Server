@@ -54,7 +54,7 @@ subprojects {
 }
 
 paperweight {
-    serverProject.set(project(":skydom-server"))
+    serverProject.set(project(":skydommc-server"))
 
     remapRepo.set(paperMavenPublicUrl)
     decompileRepo.set(paperMavenPublicUrl)
@@ -62,10 +62,10 @@ paperweight {
     usePaperUpstream(providers.gradleProperty("paperRef")) {
         withPaperPatcher {
             apiPatchDir.set(layout.projectDirectory.dir("patches/api"))
-            apiOutputDir.set(layout.projectDirectory.dir("skydom-api"))
+            apiOutputDir.set(layout.projectDirectory.dir("skydommc-api"))
 
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))
-            serverOutputDir.set(layout.projectDirectory.dir("skydom-server"))
+            serverOutputDir.set(layout.projectDirectory.dir("skydommc-server"))
         }
     }
 }
@@ -75,20 +75,20 @@ paperweight {
 //
 
 tasks.generateDevelopmentBundle {
-    apiCoordinates.set("org.skydom.chosen.server:skydom-api")
+    apiCoordinates.set("org.skydom.server.chosen:skydommc-api")
     mojangApiCoordinates.set("io.papermc.paper:paper-mojangapi")
     libraryRepositories.set(
         listOf(
             "https://repo.maven.apache.org/maven2/",
             paperMavenPublicUrl,
-            // "https://my.repo/", // This should be a repo hosting your API (in this example, 'org.skydom.chosen.server:skydom-api')
+            // "https://my.repo/", // This should be a repo hosting your API (in this example, 'org.skydom.server.chosen:skydommc-api')
         )
     )
 }
 
 allprojects {
     // Publishing API:
-    // ./gradlew :skydom-API:publish[ToMavenLocal]
+    // ./gradlew :skydommc-api:publish[ToMavenLocal]
     publishing {
         repositories {
             maven {

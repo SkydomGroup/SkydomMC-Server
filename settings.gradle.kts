@@ -7,4 +7,4 @@ pluginManagement {
 
 rootProject.name = "SkydomMC-Server"
 
-include("skydom-api", "skydom-server")
+include("skydommc-api", "skydommc-server")

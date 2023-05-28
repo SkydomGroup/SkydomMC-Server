@@ -9,7 +9,7 @@ index 0000000000000000000000000000000000000000..1dfab5c42511ba5bcd28f80d0a865dbc
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/event/player/PlayerOperationLimitEvent.java
 @@ -0,0 +1,56 @@
-+package org.skydom.chosen.server.event.player;
++package org.skydom.server.chosen.event.player;
 +
 +import org.bukkit.block.Block;
 +import org.bukkit.entity.Player;

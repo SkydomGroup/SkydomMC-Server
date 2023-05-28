@@ -78,7 +78,7 @@ index 0000000000000000000000000000000000000000..0f8ae1295a9dc6985d1ee3bd3a056635
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/SkydomLogger.java
 @@ -0,0 +1,15 @@
-+package org.skydom.chosen.server;
++package org.skydom.server.chosen;
 +
 +import org.bukkit.Bukkit;
 +import java.util.logging.Level;
@@ -99,10 +99,10 @@ index 0000000000000000000000000000000000000000..0ff7b5ee42a1bc01ef2aa0a12795c57c
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/AsyncExecutor.java
 @@ -0,0 +1,75 @@
-+package org.skydom.chosen.server.util;
++package org.skydom.server.chosen.util;
 +
 +import com.google.common.collect.Queues;
-+import org.skydom.chosen.server.SkydomLogger;
++import org.skydom.server.chosen.SkydomLogger;
 +import java.util.Queue;
 +import java.util.concurrent.locks.Condition;
 +import java.util.concurrent.locks.Lock;
@@ -180,7 +180,7 @@ index 0000000000000000000000000000000000000000..a47cb2891b45c011350c51530b9b09ff
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/AsyncPlayerAreaMap.java
 @@ -0,0 +1,32 @@
-+package org.skydom.chosen.server.util;
++package org.skydom.server.chosen.util;
 +
 +import com.destroystokyo.paper.util.misc.PlayerAreaMap;
 +import com.destroystokyo.paper.util.misc.PooledLinkedHashSets;
@@ -218,7 +218,7 @@ index 0000000000000000000000000000000000000000..d0ba21f40f77fec6835220d22c053955
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/IterableWrapper.java
 @@ -0,0 +1,21 @@
-+package org.skydom.chosen.server.util;
++package org.skydom.server.chosen.util;
 +
 +import org.jetbrains.annotations.NotNull;
 +
@@ -245,7 +245,7 @@ index 0000000000000000000000000000000000000000..44ac42bffb5b1497061fc68c67a68080
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/Long2ObjectOpenHashMapWrapper.java
 @@ -0,0 +1,41 @@
-+package org.skydom.chosen.server.util;
++package org.skydom.server.chosen.util;
 +
 +import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 +import org.jetbrains.annotations.Nullable;
@@ -292,7 +292,7 @@ index 0000000000000000000000000000000000000000..61cde9017e8b86b546e51e33e4422143
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/ProtocolUtils.java
 @@ -0,0 +1,19 @@
-+package org.skydom.chosen.server.util;
++package org.skydom.server.chosen.util;
 +
 +import net.minecraft.network.FriendlyByteBuf;
 +import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;

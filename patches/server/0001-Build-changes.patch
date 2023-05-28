@@ -14,7 +14,7 @@ index 9cf389defdaeb887e9cad4f0fed3f3b95667b238..12dd240474733161aab9da1036d4b7c0
 -    implementation(project(":paper-api"))
 -    implementation(project(":paper-mojangapi"))
 +    // Skydom start
-+    implementation(project(":skydom-api"))
++    implementation(project(":skydommc-api"))
 +    implementation("io.papermc.paper:paper-mojangapi:1.19.4-R0.1-SNAPSHOT") {
 +        exclude("io.papermc.paper", "paper-api")
 +    }
@@ -75,7 +75,7 @@ index 774556a62eb240da42e84db4502e2ed43495be17..a44707c8be4f8eb5e6ac0158ed429805
          String result = "Unknown-Version";
  
 -        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/io.papermc.paper/paper-api/pom.properties");
-+        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.skydom.chosen.server/skydom-api/pom.properties"); // Skydom
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.skydom.server.chosen/skydommc-api/pom.properties"); // Skydom
          Properties properties = new Properties();
  
          if (stream != null) {
