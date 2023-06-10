@@ -51,3 +51,5 @@ skydommc-server
 skydommc-api
 
 !gradle/wrapper/gradle-wrapper.jar
+/skydommc-server/
+/skydommc-api/
