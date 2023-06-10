@@ -1,14 +1,20 @@
 # SkydomMC-Server
 
-[![SkydomMC-Server CI](https://github.com/SkydomGroup/SkydomMC-Server/actions/workflows/build.yml/badge.svg)](https://github.com/SkydomGroup/SkydomMC-Server/actions/workflows/build.yml/)
+<div align=center>
+    <img src="./Skydom.png">
+    <br /><br />
+    <p>Fork of <a href="https://Github.com/PaperMC/Paper">Paper</a> which modify functions prohibited by Paper.</p>
+</div>
+
+[![SkydomMC-Server CI](https://Github.com/SkydomGroup/SkydomMC-Server/actions/workflows/build.yml/badge.svg)](https://Github.com/SkydomGroup/SkydomMC-Server/actions/workflows/build.yml/)
 
 ## English
 
 ### What is it?
 
-* This project is a branch of [Paper](https://PaperMc.io/).
-* [Paper's Repository](https://github.com/PaperMC/Paper/)
-* [Paper's Website](https://PaperMc.io/)
+* This project is a branch of [Paper](https://Papermc.io/Software/Paper).
+* [Paper's Repository](https://Github.com/PaperMC/Paper/)
+* [Paper's Website](https://PaperMc.io/Software/Paper)
 * The server core of [Minecraft Skydom Server](https://www.Skydom.org/) technology survival mode.
 
 ### What has been modified?
@@ -21,7 +27,7 @@
 ### How to use it?
 
 #### The first method.
-* Download the compiled jar from [Actions](https://github.com/SkydomGroup/SkydomMC-Server/actions/workflows/build.yml).
+* Download the compiled jar from [Actions](https://Github.com/SkydomGroup/SkydomMC-Server/actions/workflows/build.yml).
 
 #### The second approach.
 * Clone this repo.
@@ -33,9 +39,9 @@
 
 ### 这是什么？
 
-* 这是一个 [Paper](https://github.com/PaperMC/Paper/) 的分支。
-* [Paper 的存储库](https://github.com/PaperMC/Paper/)
-* [Paper 的官方网站](https://PaperMc.io/)
+* 这是一个 [Paper](https://PaperMc.io/Software/Paper) 的分支。
+* [Paper 的存储库](https://Github.com/PaperMC/Paper/)
+* [Paper 的官方网站](https://PaperMc.io/Software/Paper)
 * [Minecraft Skydom Server](https://www.Skydom.org/) 生电服所使用的核心。
 
 ### 修改了什么？

@@ -57,7 +57,7 @@ index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..9c43be493774a29f9b16caa0c36ca8c8
 +            if (nbt.contains("Skydom.Data")) {
 +                SkydomData = nbt.getCompound("Skydom.Data");
 +            }
-+            // Skydom start - Skydom ex data
++            // Skydom end - Skydom ex data
  
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.forThrowable(throwable, "Loading entity NBT");
