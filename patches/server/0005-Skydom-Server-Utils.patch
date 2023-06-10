@@ -1,3 +1,4 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chosen <haizhongdelan@outlook.com>
 Date: Sat, 15 Apr 2023 14:00:27 +0800
 Subject: [PATCH] Skydom Server Utils
@@ -30,10 +31,10 @@ index 46954db7ecd35ac4018fdf476df7c8020d7ce6c8..d1abd746a80b86bd5b56178cdebb8558
      public PlayerAreaMap() {
          super();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..9c43be493774a29f9b16caa0c36ca8c8bd58ffd8 100644
+index b260a8a7aacd49dc50fbbd2539b3dd9df5ca3bb7..0b030d6ae46c8d59039c7a0fd9d906df5ee6eb3c 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -399,6 +399,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -400,6 +400,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      private UUID originWorld;
      public boolean freezeLocked = false; // Paper - Freeze Tick Lock API
      public boolean collidingWithWorldBorder; // Paper
@@ -41,7 +42,7 @@ index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..9c43be493774a29f9b16caa0c36ca8c8
  
      public void setOrigin(@javax.annotation.Nonnull Location location) {
          this.origin = location.toVector();
-@@ -2276,6 +2277,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2277,6 +2278,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                  nbt.putBoolean("Paper.FreezeLock", true);
              }
              // Paper end
@@ -49,7 +50,7 @@ index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..9c43be493774a29f9b16caa0c36ca8c8
              return nbt;
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.forThrowable(throwable, "Saving entity NBT");
-@@ -2444,6 +2446,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2445,6 +2447,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                  freezeLocked = nbt.getBoolean("Paper.FreezeLock");
              }
              // Paper end
@@ -57,11 +58,11 @@ index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..9c43be493774a29f9b16caa0c36ca8c8
 +            if (nbt.contains("Skydom.Data")) {
 +                SkydomData = nbt.getCompound("Skydom.Data");
 +            }
-+            // Skydom end - Skydom ex data
++            // Skydom start - Skydom ex data
  
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.forThrowable(throwable, "Loading entity NBT");
-@@ -4609,4 +4616,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4610,4 +4617,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return ((net.minecraft.server.level.ServerChunkCache) level.getChunkSource()).isPositionTicking(this);
      }
      // Paper end
@@ -74,7 +75,7 @@ index 467fadd4c27023c8bf3826b113ccb2c6fad5b943..9c43be493774a29f9b16caa0c36ca8c8
  }
 diff --git a/src/main/java/org/skydom/chosen/server/SkydomLogger.java b/src/main/java/org/skydom/chosen/server/SkydomLogger.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0f8ae1295a9dc6985d1ee3bd3a0566351469e56f
+index 0000000000000000000000000000000000000000..3413c86351207e329ed7f387117a9644e8427e1c
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/SkydomLogger.java
 @@ -0,0 +1,15 @@
@@ -95,7 +96,7 @@ index 0000000000000000000000000000000000000000..0f8ae1295a9dc6985d1ee3bd3a056635
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/util/AsyncExecutor.java b/src/main/java/org/skydom/chosen/server/util/AsyncExecutor.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0ff7b5ee42a1bc01ef2aa0a12795c57cb1ef02e3
+index 0000000000000000000000000000000000000000..4de74797610346ca0c7b177dbb5a118de176a903
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/AsyncExecutor.java
 @@ -0,0 +1,75 @@
@@ -176,7 +177,7 @@ index 0000000000000000000000000000000000000000..0ff7b5ee42a1bc01ef2aa0a12795c57c
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/util/AsyncPlayerAreaMap.java b/src/main/java/org/skydom/chosen/server/util/AsyncPlayerAreaMap.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a47cb2891b45c011350c51530b9b09ffd50064c5
+index 0000000000000000000000000000000000000000..6213c997a8021b18f6e52d1016edf9a437bf3b82
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/AsyncPlayerAreaMap.java
 @@ -0,0 +1,32 @@
@@ -214,7 +215,7 @@ index 0000000000000000000000000000000000000000..a47cb2891b45c011350c51530b9b09ff
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/util/IterableWrapper.java b/src/main/java/org/skydom/chosen/server/util/IterableWrapper.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d0ba21f40f77fec6835220d22c0539555442d6f3
+index 0000000000000000000000000000000000000000..9eed1f8a44e2cfb8feac1012639af70408701c2b
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/IterableWrapper.java
 @@ -0,0 +1,21 @@
@@ -241,7 +242,7 @@ index 0000000000000000000000000000000000000000..d0ba21f40f77fec6835220d22c053955
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/util/Long2ObjectOpenHashMapWrapper.java b/src/main/java/org/skydom/chosen/server/util/Long2ObjectOpenHashMapWrapper.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..44ac42bffb5b1497061fc68c67a68080e4baa4f6
+index 0000000000000000000000000000000000000000..3b4220aab6d142d82b62c3a25b501178960e0963
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/Long2ObjectOpenHashMapWrapper.java
 @@ -0,0 +1,41 @@
@@ -288,7 +289,7 @@ index 0000000000000000000000000000000000000000..44ac42bffb5b1497061fc68c67a68080
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/util/ProtocolUtils.java b/src/main/java/org/skydom/chosen/server/util/ProtocolUtils.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..61cde9017e8b86b546e51e33e4422143e530894b
+index 0000000000000000000000000000000000000000..74f4f6387c5c7e5f0ff3adee26bdbf0b8520240e
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/util/ProtocolUtils.java
 @@ -0,0 +1,19 @@

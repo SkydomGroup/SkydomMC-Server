@@ -1,3 +1,4 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chosen <haizhongdelan@outlook.com>
 Date: Sat, 15 Apr 2023 13:22:57 +0800
 Subject: [PATCH] Add fakeplayer api
@@ -5,7 +6,7 @@ Subject: [PATCH] Add fakeplayer api
 
 diff --git a/src/main/java/org/skydom/chosen/server/entity/Bot.java b/src/main/java/org/skydom/chosen/server/entity/Bot.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..297e22c3455b6ad2ad83d82eff51f896f5f861c8
+index 0000000000000000000000000000000000000000..dcd17877c6a8b2415df9d611031f59a5475fe0a2
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/entity/Bot.java
 @@ -0,0 +1,17 @@
@@ -28,7 +29,7 @@ index 0000000000000000000000000000000000000000..297e22c3455b6ad2ad83d82eff51f896
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/entity/bot/BotCreateEvent.java b/src/main/java/org/skydom/chosen/server/entity/bot/BotCreateEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d47d026d58bcb0daf209f29851f7c0ca5a56d28a
+index 0000000000000000000000000000000000000000..99a6412ecd56a62586d71c9d639235a6b661d14e
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotCreateEvent.java
 @@ -0,0 +1,106 @@
@@ -140,7 +141,7 @@ index 0000000000000000000000000000000000000000..d47d026d58bcb0daf209f29851f7c0ca
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/entity/bot/BotEvent.java b/src/main/java/org/skydom/chosen/server/entity/bot/BotEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..95d00a0eabc8497ed74a929e396dc2a7ea1e72eb
+index 0000000000000000000000000000000000000000..604d9f514142ddeb1eac70b0420e1105f6384a1f
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotEvent.java
 @@ -0,0 +1,31 @@
@@ -177,7 +178,7 @@ index 0000000000000000000000000000000000000000..95d00a0eabc8497ed74a929e396dc2a7
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/entity/bot/BotJoinEvent.java b/src/main/java/org/skydom/chosen/server/entity/bot/BotJoinEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..4efd0f59194f43b0801f6ed4146587b6162784e2
+index 0000000000000000000000000000000000000000..98120bbe476ccc8d79ccccc38b3e923c2936c372
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/entity/bot/BotJoinEvent.java
 @@ -0,0 +1,27 @@

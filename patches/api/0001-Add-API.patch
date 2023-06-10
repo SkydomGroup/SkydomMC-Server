@@ -1,13 +1,14 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chosen <haizhongdelan@outlook.com>
 Date: Sat, 15 Apr 2023 12:53:09 +0800
 Subject: [PATCH] Add API
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 8621dba7f10ab822b5b99ce0d05da58823605cb6..5eaccb6883d4ca9d5f230617ca5204b0e99c69a6 100644
+index 9f7029d327b55c8b1b9cfef8ea2678b87dad8ddb..bbccef5a4e17a008cb6929b03766c1671fa0a99a 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1968,6 +1968,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -1967,6 +1967,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
          }
          // Paper end
  

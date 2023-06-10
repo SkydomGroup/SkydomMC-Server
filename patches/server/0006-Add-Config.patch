@@ -1,3 +1,4 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chosen <haizhongdelan@outlook.com>
 Date: Sat, 15 Apr 2023 17:28:18 +0800
 Subject: [PATCH] Add Config
@@ -18,7 +19,7 @@ index c07eb451a576811a39021f6f97103c77488fd001..395a958006c5646e10ed9a5fa11c4727
  
          new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f502934c3ab34351f61d057ef7927310b63c680b..fc1e205070aa1908a95a22d2628428d5d9986f36 100644
+index f502934c3ab34351f61d057ef7927310b63c680b..119e0a8ddd5fbaa8dc93900205375a5876154086 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -164,6 +164,7 @@ import net.minecraft.world.level.storage.loot.LootTables;
@@ -38,7 +39,7 @@ index f502934c3ab34351f61d057ef7927310b63c680b..fc1e205070aa1908a95a22d2628428d5
              org.spigotmc.WatchdogThread.hasStarted = true; // Paper
              Arrays.fill( recentTps, 20 );
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index a7e133f3495e9132a5fdae2c24f225e7b026295a..20d84766e5c6280d810041e961c106b1fabcf38a 100644
+index a7e133f3495e9132a5fdae2c24f225e7b026295a..a9e827146f9a5ed1950cce5bd517ae9a631017c5 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -222,6 +222,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -51,7 +52,7 @@ index a7e133f3495e9132a5fdae2c24f225e7b026295a..20d84766e5c6280d810041e961c106b1
          this.setFlightAllowed(dedicatedserverproperties.allowFlight);
          this.setMotd(dedicatedserverproperties.motd);
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..717ffaeb0aa44529b16b3213cf642c051c7a1bb0 100644
+index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..7a7e25596dd9d2690f0ccd3c93128673ce69f2d8 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -102,6 +102,7 @@ import org.bukkit.craftbukkit.util.CraftNamespacedKey;
@@ -79,10 +80,10 @@ index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..717ffaeb0aa44529b16b3213cf642c05
          this.world = new CraftWorld((ServerLevel) this, gen, biomeProvider, env);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf0134228f 100644
+index bf2e77a928a4894b0bb29c48e28ce775331346bd..26949e5131bd036cef0acd0e7213e4f6c6664376 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -956,6 +957,7 @@ public final class CraftServer implements Server {
+@@ -957,6 +957,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          this.console.paperConfigurations.reloadConfigs(this.console);
@@ -90,7 +91,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf
          for (ServerLevel world : this.console.getAllLevels()) {
              // world.serverLevelData.setDifficulty(config.difficulty); // Paper - per level difficulty
              world.setSpawnSettings(world.serverLevelData.getDifficulty() != Difficulty.PEACEFUL && config.spawnMonsters, config.spawnAnimals); // Paper - per level difficulty (from MinecraftServer#setDifficulty(ServerLevel, Difficulty, boolean))
-@@ -963,7 +965,7 @@ public final class CraftServer implements Server {
+@@ -964,7 +965,7 @@ public final class CraftServer implements Server {
              for (SpawnCategory spawnCategory : SpawnCategory.values()) {
                  if (CraftSpawnCategory.isValidForLimits(spawnCategory)) {
                      long ticksPerCategorySpawn = this.getTicksPerSpawns(spawnCategory);
@@ -99,7 +100,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf
                          world.ticksPerSpawnCategory.put(spawnCategory, CraftSpawnCategory.getDefaultTicksPerSpawn(spawnCategory));
                      } else {
                          world.ticksPerSpawnCategory.put(spawnCategory, ticksPerCategorySpawn);
-@@ -971,6 +973,7 @@ public final class CraftServer implements Server {
+@@ -972,6 +973,7 @@ public final class CraftServer implements Server {
                  }
              }
              world.spigotConfig.init(); // Spigot
@@ -107,7 +108,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf
          }
  
          Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
-@@ -986,6 +989,7 @@ public final class CraftServer implements Server {
+@@ -987,6 +989,7 @@ public final class CraftServer implements Server {
          this.reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          io.papermc.paper.command.PaperCommands.registerCommands(this.console); // Paper
@@ -115,7 +116,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf
          this.overrideAllCommandBlockCommands = this.commandsConfiguration.getStringList("command-block-overrides").contains("*");
          this.ignoreVanillaPermissions = this.commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
-@@ -2744,6 +2748,14 @@ public final class CraftServer implements Server {
+@@ -2741,6 +2744,14 @@ public final class CraftServer implements Server {
              return CraftServer.this.console.paperConfigurations.createLegacyObject(CraftServer.this.console);
          }
  
@@ -131,7 +132,7 @@ index e9d588a50d9623cc2c058947f76e09f7bd9f489b..eb6dfa08fe9126b88b60deaa7669cecf
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 755c223ab2a046285eb9916b6195093714f4c5ba..ad3ca8c2ca15d6f0f78000aeb2ab1684e9f8ca45 100644
+index c103f10dbb6c06e14bb7b5df73a797f456803301..c8717cbd64ec72869f656c5d7cf2e65293c11072 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -126,6 +126,14 @@ public class Main {
@@ -151,7 +152,7 @@ index 755c223ab2a046285eb9916b6195093714f4c5ba..ad3ca8c2ca15d6f0f78000aeb2ab1684
                          .ofType(File.class)
 diff --git a/src/main/java/org/skydom/chosen/server/SkydomConfig.java b/src/main/java/org/skydom/chosen/server/SkydomConfig.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..70232eb2b78460b0aca3d97e7c9484e0ee89bdb8
+index 0000000000000000000000000000000000000000..254a27d34a039b634e0697edb90ccb860506b2fb
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/SkydomConfig.java
 @@ -0,0 +1,308 @@
@@ -465,7 +466,7 @@ index 0000000000000000000000000000000000000000..70232eb2b78460b0aca3d97e7c9484e0
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/command/CommandArgument.java b/src/main/java/org/skydom/chosen/server/command/CommandArgument.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..663bb5359464536d8e4ad5e3708907e0a3ccc895
+index 0000000000000000000000000000000000000000..6d1ca93380d9990d0a12aafa28524fe5fa55b8cd
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/command/CommandArgument.java
 @@ -0,0 +1,43 @@
@@ -514,7 +515,7 @@ index 0000000000000000000000000000000000000000..663bb5359464536d8e4ad5e3708907e0
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/command/CommandArgumentResult.java b/src/main/java/org/skydom/chosen/server/command/CommandArgumentResult.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..8190d67736eaea7876afb216244e2deb12dab34f
+index 0000000000000000000000000000000000000000..22b27ced8d14674df7ab4fe62870dbbdc45bdc72
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/command/CommandArgumentResult.java
 @@ -0,0 +1,61 @@
@@ -581,7 +582,7 @@ index 0000000000000000000000000000000000000000..8190d67736eaea7876afb216244e2deb
 +}
 diff --git a/src/main/java/org/skydom/chosen/server/command/CommandArgumentType.java b/src/main/java/org/skydom/chosen/server/command/CommandArgumentType.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..da2d4089b7c117d1fdae1a21456926cf0c31ae3d
+index 0000000000000000000000000000000000000000..4bbcc13bb6fc2e4205d63a365c5b10990353ab39
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/command/CommandArgumentType.java
 @@ -0,0 +1,37 @@

@@ -1,13 +1,14 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chosen <haizhongdelan@outlook.com>
 Date: Sat, 30 Oct 2021 21:07:43 +0800
 Subject: [PATCH] Fix gravity block duper
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 4705d7066207250c03a5f98eef61554c901f2e35..467fadd4c27023c8bf3826b113ccb2c6fad5b943 100644
+index df316ca580a0a3b4ba6b658f7d7bdf542f4ad85b..b260a8a7aacd49dc50fbbd2539b3dd9df5ca3bb7 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -512,36 +512,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -513,36 +513,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return chunkMap.playerEntityTrackerTrackMaps[type.ordinal()].getObjectsInRange(MCUtil.getCoordinateKey(this));
      }
      // Paper end - optimise entity tracking
@@ -45,7 +46,7 @@ index 4705d7066207250c03a5f98eef61554c901f2e35..467fadd4c27023c8bf3826b113ccb2c6
  
      public Entity(EntityType<?> type, Level world) {
          this.id = Entity.ENTITY_COUNTER.incrementAndGet();
-@@ -2944,7 +2916,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2945,7 +2917,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
              }
  
              this.processPortalCooldown();
