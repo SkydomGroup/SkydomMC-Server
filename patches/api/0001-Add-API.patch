@@ -5,10 +5,10 @@ Subject: [PATCH] Add API
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 9f7029d327b55c8b1b9cfef8ea2678b87dad8ddb..bbccef5a4e17a008cb6929b03766c1671fa0a99a 100644
+index 1d1a1d087dabc9794e0062a064da2cced4062309..da7d2a1aaf8f8f664b8fe11e1970560d35e9b583 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1967,6 +1967,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -1994,6 +1994,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
          }
          // Paper end
  
