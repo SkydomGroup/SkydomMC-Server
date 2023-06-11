@@ -5,7 +5,7 @@ Subject: [PATCH] Build changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 9cf389defdaeb887e9cad4f0fed3f3b95667b238..1ad031cf088e87e085d235053615b59aa910400f 100644
+index e7a03ea1dab56e7725f718da0b44c736018ac995..ed8bbd147fa8e47e8272e9e003454bc0cbbdaf04 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,8 +7,12 @@ plugins {
@@ -15,7 +15,7 @@ index 9cf389defdaeb887e9cad4f0fed3f3b95667b238..1ad031cf088e87e085d235053615b59a
 -    implementation(project(":paper-api"))
 -    implementation(project(":paper-mojangapi"))
 +    // Skydom start
-+    implementation(project(":skydommc-api"))
++    implementation(project(":SkydomMC-API"))
 +    implementation("io.papermc.paper:paper-mojangapi:1.19.4-R0.1-SNAPSHOT") {
 +        exclude("io.papermc.paper", "paper-api")
 +    }
@@ -42,10 +42,10 @@ index 9cf389defdaeb887e9cad4f0fed3f3b95667b238..1ad031cf088e87e085d235053615b59a
      standardInput = System.`in`
      workingDir = rootProject.layout.projectDirectory
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9f15d9dbdfa74a0640b1a2b4ff695609d4758a4c..f502934c3ab34351f61d057ef7927310b63c680b 100644
+index fb82bb52f219e7683fe1d3c0fb3acbe2251de8d4..a457f12673e608284663cc3b37d1f49d452a8672 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1682,7 +1682,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1681,7 +1681,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -55,10 +55,10 @@ index 9f15d9dbdfa74a0640b1a2b4ff695609d4758a4c..f502934c3ab34351f61d057ef7927310
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e769f7b0904814ee63e2a73dca57e5dc33382fba..bf2e77a928a4894b0bb29c48e28ce775331346bd 100644
+index ffa27c9c02dc4d12411fc089de3af8e8e12ba06e..2620defcc42105682f8d9f8f9bb4a0ee6cdf532b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -257,7 +257,7 @@ import javax.annotation.Nullable; // Paper
+@@ -262,7 +262,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -68,7 +68,7 @@ index e769f7b0904814ee63e2a73dca57e5dc33382fba..bf2e77a928a4894b0bb29c48e28ce775
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 774556a62eb240da42e84db4502e2ed43495be17..358cedd6e5d645e89186473904f008db0957ef27 100644
+index 774556a62eb240da42e84db4502e2ed43495be17..3e473ebeaaa529992b321bebdebdc4a8acffe34a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
@@ -76,7 +76,7 @@ index 774556a62eb240da42e84db4502e2ed43495be17..358cedd6e5d645e89186473904f008db
          String result = "Unknown-Version";
  
 -        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/io.papermc.paper/paper-api/pom.properties");
-+        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.skydom.server.chosen/skydommc-api/pom.properties"); // Skydom
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.skydom.server.chosen/SkydomMC-API/pom.properties"); // Skydom
          Properties properties = new Properties();
  
          if (stream != null) {
