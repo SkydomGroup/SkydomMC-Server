@@ -76,7 +76,7 @@ index 774556a62eb240da42e84db4502e2ed43495be17..3e473ebeaaa529992b321bebdebdc4a8
          String result = "Unknown-Version";
  
 -        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/io.papermc.paper/paper-api/pom.properties");
-+        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.skydom.server.chosen/skydommc-api/pom.properties"); // Skydom
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.skydom.chosen.server/skydommc-api/pom.properties"); // Skydom
          Properties properties = new Properties();
  
          if (stream != null) {
