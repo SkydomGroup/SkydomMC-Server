@@ -75,11 +75,11 @@ index 92202262eff01ae3bbeff0e6ebdcf26ad613c169..c96a2abf1fbc4cad8782fd4400ae5efa
  }
 diff --git a/src/main/java/org/skydom/chosen/server/SkydomLogger.java b/src/main/java/org/skydom/chosen/server/SkydomLogger.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..3413c86351207e329ed7f387117a9644e8427e1c
+index 0000000000000000000000000000000000000000..0f8ae1295a9dc6985d1ee3bd3a0566351469e56f
 --- /dev/null
 +++ b/src/main/java/org/skydom/chosen/server/SkydomLogger.java
 @@ -0,0 +1,15 @@
-+package org.skydom.server.chosen;
++package org.skydom.chosen.server;
 +
 +import org.bukkit.Bukkit;
 +import java.util.logging.Level;
