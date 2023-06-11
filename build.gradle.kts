@@ -54,7 +54,7 @@ subprojects {
 }
 
 paperweight {
-    serverProject.set(project(":SkydomMC-Server"))
+    serverProject.set(project(":skydommc-server"))
 
     remapRepo.set(paperMavenPublicUrl)
     decompileRepo.set(paperMavenPublicUrl)
@@ -62,54 +62,10 @@ paperweight {
     usePaperUpstream(providers.gradleProperty("paperRef")) {
         withPaperPatcher {
             apiPatchDir.set(layout.projectDirectory.dir("patches/api"))
-            apiOutputDir.set(layout.projectDirectory.dir("SkydomMC-API"))
+            apiOutputDir.set(layout.projectDirectory.dir("skydommc-api"))
 
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))
-            serverOutputDir.set(layout.projectDirectory.dir("SkydomMC-Server"))
-        }
-    }
-}
-
-//
-// Everything below here is optional if you don't care about publishing API or dev bundles to your repository
-//
-
-tasks.generateDevelopmentBundle {
-    apiCoordinates.set("org.skydom.server.chosen:SkydomMC-API")
-    mojangApiCoordinates.set("io.papermc.paper:paper-mojangapi")
-    libraryRepositories.set(
-        listOf(
-            "https://repo.maven.apache.org/maven2/",
-            paperMavenPublicUrl,
-            // "https://my.repo/", // This should be a repo hosting your API (in this example, 'org.skydom.server.chosen:SkydomMC-API')
-        )
-    )
-}
-
-allprojects {
-    // Publishing API:
-    // ./gradlew :SkydomMC-API:publish[ToMavenLocal]
-    publishing {
-        repositories {
-            maven {
-                name = "myRepoSnapshots"
-                url = uri("https://my.repo/")
-                // See Gradle docs for how to provide credentials to PasswordCredentials
-                // https://docs.gradle.org/current/samples/sample_publishing_credentials.html
-                credentials(PasswordCredentials::class)
-            }
-        }
-    }
-}
-
-publishing {
-    // Publishing dev bundle:
-    // ./gradlew publishDevBundlePublicationTo(MavenLocal|MyRepoSnapshotsRepository) -PpublishDevBundle
-    if (project.hasProperty("publishDevBundle")) {
-        publications.create<MavenPublication>("devBundle") {
-            artifact(tasks.generateDevelopmentBundle) {
-                artifactId = "dev-bundle"
-            }
+            serverOutputDir.set(layout.projectDirectory.dir("skydommc-server"))
         }
     }
 }
