@@ -47,9 +47,7 @@ out/
 # other stuff
 run/
 
-SkydomMC-Server
-SkydomMC-API
-
 !gradle/wrapper/gradle-wrapper.jar
-/SkydomMC-Server/
-/SkydomMC-API/
+
+/skydommc-server/
+/skydommc-api/
