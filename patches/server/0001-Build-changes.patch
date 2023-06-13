@@ -5,7 +5,7 @@ Subject: [PATCH] Build changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index e7a03ea1dab56e7725f718da0b44c736018ac995..ed8bbd147fa8e47e8272e9e003454bc0cbbdaf04 100644
+index e7a03ea1dab56e7725f718da0b44c736018ac995..b81341c5a39bda7ba75519ec6847a3df023b8c8d 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,8 +7,12 @@ plugins {
@@ -68,7 +68,7 @@ index ffa27c9c02dc4d12411fc089de3af8e8e12ba06e..2620defcc42105682f8d9f8f9bb4a0ee
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 774556a62eb240da42e84db4502e2ed43495be17..3e473ebeaaa529992b321bebdebdc4a8acffe34a 100644
+index 774556a62eb240da42e84db4502e2ed43495be17..358cedd6e5d645e89186473904f008db0957ef27 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
