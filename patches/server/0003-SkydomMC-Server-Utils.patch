@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Chosen <haizhongdelan@outlook.com>
 Date: Sat, 15 Apr 2023 14:00:27 +0800
-Subject: [PATCH] Skydom Server Utils
+Subject: [PATCH] SkydomMC Server Utils
 
 
 diff --git a/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java b/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
