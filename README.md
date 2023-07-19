@@ -3,7 +3,7 @@
 <div align=center>
     <img src="./Skydom.png">
     <br /><br />
-    <p>Fork of <a href="https://Github.com/PaperMC/Paper">Paper</a> which modify functions prohibited by Paper.</p>
+    <p>A fork of <a href="https://Github.com/PaperMC/Paper">Paper</a> that modifies functions prohibited by Paper.</p>
 </div>
 
 [![SkydomMC-Server CI](https://Github.com/SkydomGroup/SkydomMC-Server/actions/workflows/build.yml/badge.svg)](https://Github.com/SkydomGroup/SkydomMC-Server/actions/workflows/build.yml/)
