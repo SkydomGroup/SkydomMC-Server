@@ -31,7 +31,7 @@
 
 #### The second approach.
 * Clone this repo.
-* Run `./gradlew applyPatches`, then `./gradlew createReobfBundlerJar` from your terminal.
+* Run `./gradlew applyPatches`, then `./gradlew createReobfPaperclipJar` from your terminal.
 * You can find the compiled jar in the project root's *build/libs* directory.
 
 
@@ -58,5 +58,5 @@
 
 #### 第二种办法。
 * 克隆这个存储库。
-* 运行 `./gradlew applyPatches`后，再运行`./gradlew createReobfBundlerJar` 在你的终端。
+* 运行 `./gradlew applyPatches`后，再运行`./gradlew createReobfPaperclipJar` 在你的终端。
 * 运行完成后，您可以在 *build/libs* 找到构建好的Jar。

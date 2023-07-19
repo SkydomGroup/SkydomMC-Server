@@ -40,7 +40,7 @@ jobs:
                   ./gradlew clean --stacktrace
                   ./gradlew PaperRefLatest --stacktrace
                   ./gradlew applyPatches --stacktrace
-                  ./gradlew createReobfBundlerJar --stacktrace
+                  ./gradlew createReobfPaperclipJar --stacktrace
             - uses: actions/upload-artifact@v3
               with:
                 name: SkydomMC-Server Artifact
