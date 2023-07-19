@@ -1,3 +1,5 @@
+import io.papermc.paperweight.util.*
+
 plugins {
     java
     `maven-publish`
@@ -66,6 +68,36 @@ paperweight {
 
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))
             serverOutputDir.set(layout.projectDirectory.dir("skydommc-server"))
+        }
+    }
+}
+
+tasks.register("PaperRefLatest") {
+    // Update the PaperRef in gradle.properties to be the latest commit.
+    val tempDir = layout.cacheDir("PaperRefLatest");
+    val file = "gradle.properties";
+
+    doFirst {
+        data class GithubCommit(
+            val sha: String
+        )
+        val PaperLatestCommitJson = layout.cache.resolve("paperLatestCommit.json");
+        download.get().download("https://api.github.com/repos/PaperMC/Paper/commits/master", PaperLatestCommitJson);
+        val PaperLatestCommit = gson.fromJson<paper.libs.com.google.gson.JsonObject>(PaperLatestCommitJson)["sha"].asString;
+
+        copy {
+            from(file)
+            into(tempDir)
+            filter { line: String ->
+                line.replace("paperRef=.*".toRegex(), "paperRef=$PaperLatestCommit")
+            }
+        }
+    }
+
+    doLast {
+        copy {
+            from(tempDir.file("gradle.properties"))
+            into(project.file(file).parent)
         }
     }
 }
